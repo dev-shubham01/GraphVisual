@@ -54,3 +54,9 @@ The project relies on the following key libraries:
 - **Screenshot**:
 ![App Screenshot](src/assets/GraphVisual.png)
 ![Selected Node](src/assets/SelectedNode.png)
+
+- **Link**
+https://docs.google.com/document/d/1m60_YuaIgjmPkU2H9bTP3uKk0dnCDiZ8E2psc5Nw3Qs/edit?usp=sharing
+
+- **Deployed Link**:
+https://graphvisualspo1.netlify.app/
