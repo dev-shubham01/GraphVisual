@@ -53,3 +53,4 @@ The project relies on the following key libraries:
   
 - **Screenshot**:
 ![App Screenshot](src/assets/GraphVisual.png)
+![Selected Node](src/assets/SelectedNode.png)
