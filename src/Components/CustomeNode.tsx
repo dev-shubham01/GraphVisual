@@ -2,14 +2,17 @@ import React from "react";
 import { NodeProps, Handle, Position } from "react-flow-renderer";
 import "./CustomNode.css";
 
-const NodeCustomizationPanel: React.FC<NodeProps> = ({ id, data }) => {
+const CustomNode: React.FC<NodeProps & { selected: boolean }> = ({ id, data, selected }) => {
   return (
-    <div className="nodeCustomizatinPanel" style={{backgroundColor:data?.color}}>
+    <div
+      className={`nodeCustomizatinPanel ${selected ? "selectedNode" : ""}`}
+      style={{ backgroundColor: data?.color }}
+    >
       <span
         className="nodeLabel"
         style={{
           fontSize: data?.fontSize || 14,
-          color: "#000000", 
+          color: "#000000",
         }}
       >
         {data?.label || "Custom Node"}
@@ -20,5 +23,4 @@ const NodeCustomizationPanel: React.FC<NodeProps> = ({ id, data }) => {
     </div>
   );
 };
-
-export default NodeCustomizationPanel;
+export default CustomNode;

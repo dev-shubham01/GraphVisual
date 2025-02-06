@@ -3,7 +3,7 @@ import ReactFlow, { addEdge, Background, useNodesState, useEdgesState, Connectio
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { updateNodePosition, updateNodeProperties } from "../store/graphSlice";
-import NodeCustomizationPanel from "./CustomeNode";
+import CustomNode from "./CustomeNode";
 import UndoRedoControls from "./UndoRedoControls";
 import ColorSelector from "./ColorSelector";
 import FontSizeSelector from "./FontSizeSelector";
@@ -12,13 +12,12 @@ import CustomEdge from "./CustomEdge";
 import './GraphContainer.css';
 
 const nodeTypes = {
-  customNode: NodeCustomizationPanel,
+  customNode: CustomNode,
 };
 
 const edgeTypes = {
   customEdge: CustomEdge,
 };
-
 const GraphContainer: React.FC = () => {
   const dispatch = useDispatch();
   const { nodes, edges } = useSelector((state: RootState) => state.graph);
@@ -35,20 +34,18 @@ const GraphContainer: React.FC = () => {
     setEdges(edges);
   }, [nodes, edges]);
 
- 
   const onNodeClick = useCallback((event, node) => {
     setSelectedNode(node);
     setLocalFontSize(node.data?.fontSize || 14);
     setLocalColor(node.data?.color || "#ffffff");
   }, []);
 
-  // Handle new edge connections
   const onConnect = useCallback((params) => {
     setEdges((eds) =>
       addEdge(
         {
           ...params,
-          type: "customEdge", 
+          type: "customEdge",
           animated: true,
           style: { stroke: "red" },
         },
@@ -57,7 +54,6 @@ const GraphContainer: React.FC = () => {
     );
   }, [setEdges]);
 
-  // Debounced node position update for Redux
   const handleNodePositionChange = useCallback(
     debounce((id: string, position: { x: number; y: number }) => {
       dispatch(updateNodePosition({ id, position }));
@@ -65,17 +61,15 @@ const GraphContainer: React.FC = () => {
     [dispatch]
   );
 
-  // Debounced color change handler for Redux
   const handleColorChange = useCallback(
     debounce((color: string) => {
       if (selectedNode) {
         dispatch(updateNodeProperties({ id: selectedNode.id, color }));
-        setLocalColor(color); 
+        setLocalColor(color);
       }
-    }, 300), 
+    }, 300),
     [dispatch, selectedNode]
   );
-
 
   const handleFontSizeChange = (fontSize: number) => {
     if (selectedNode) {
@@ -87,7 +81,13 @@ const GraphContainer: React.FC = () => {
   return (
     <div className="graphContainer">
       <ReactFlow
-        nodes={localNodes}
+        nodes={localNodes.map((node) => ({
+          ...node,
+          data: {
+            ...node.data,
+            selected: node.id === selectedNode?.id, // Add selected flag to node data
+          },
+        }))}
         edges={localEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
@@ -100,7 +100,7 @@ const GraphContainer: React.FC = () => {
         attributionPosition="bottom-right"
         connectionLineType={ConnectionLineType.SmoothStep}
         nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes} 
+        edgeTypes={edgeTypes}
       >
         <Background />
         <Controls />
@@ -111,15 +111,20 @@ const GraphContainer: React.FC = () => {
 
         <div className="selectionPanel">
           <div className="colorSelection">
-            <span>Color:</span> {selectedNode ? <ColorSelector color={localColor} onColorChange={handleColorChange} /> : null}
+            <span>Color:</span>{" "}
+            {selectedNode ? (
+              <ColorSelector color={localColor} onColorChange={handleColorChange} />
+            ) : null}
           </div>
           <div className="textSelection">
-            <span>Font: </span>{selectedNode ? <FontSizeSelector fontSize={localFontSize} onFontSizeChange={handleFontSizeChange} /> : null}
+            <span>Font: </span>
+            {selectedNode ? (
+              <FontSizeSelector fontSize={localFontSize} onFontSizeChange={handleFontSizeChange} />
+            ) : null}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default GraphContainer;
