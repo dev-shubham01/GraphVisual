@@ -13,9 +13,9 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/dev-shubham01/GraphVisual.git
    cd GraphVisual
-2. Install Dependencies
-   --npm install
-   --npm run dev
+2. Install Dependencies:
+   npm install
+   npm run dev
    
 This will properly clone the repository, install the necessary dependencies, and start the development server.
 
