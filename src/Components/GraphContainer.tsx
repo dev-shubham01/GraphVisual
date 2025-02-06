@@ -30,13 +30,12 @@ const GraphContainer: React.FC = () => {
   const [localFontSize, setLocalFontSize] = useState<number>(14);
   const [localColor, setLocalColor] = useState<string>("#ffffff");
 
-  // Sync nodes and edges from Redux state
   useEffect(() => {
     setNodes(nodes);
     setEdges(edges);
   }, [nodes, edges]);
 
-  // Handle node selection
+ 
   const onNodeClick = useCallback((event, node) => {
     setSelectedNode(node);
     setLocalFontSize(node.data?.fontSize || 14);
@@ -49,7 +48,7 @@ const GraphContainer: React.FC = () => {
       addEdge(
         {
           ...params,
-          type: "customEdge", // Use the custom edge type
+          type: "customEdge", 
           animated: true,
           style: { stroke: "red" },
         },
@@ -71,13 +70,13 @@ const GraphContainer: React.FC = () => {
     debounce((color: string) => {
       if (selectedNode) {
         dispatch(updateNodeProperties({ id: selectedNode.id, color }));
-        setLocalColor(color); // Update local state for UI
+        setLocalColor(color); 
       }
-    }, 300), // Delay of 300ms before color change update
+    }, 300), 
     [dispatch, selectedNode]
   );
 
-  // Handle font size change
+
   const handleFontSizeChange = (fontSize: number) => {
     if (selectedNode) {
       dispatch(updateNodeProperties({ id: selectedNode.id, fontSize }));
@@ -101,7 +100,7 @@ const GraphContainer: React.FC = () => {
         attributionPosition="bottom-right"
         connectionLineType={ConnectionLineType.SmoothStep}
         nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes} // Pass the custom edge types
+        edgeTypes={edgeTypes} 
       >
         <Background />
         <Controls />

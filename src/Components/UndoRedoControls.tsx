@@ -13,13 +13,13 @@ const UndoRedoControls: React.FC = () => {
 
   const handleUndo = () => {
     if (canUndo) {
-      dispatch(undoAction()); // Dispatch undo action
+      dispatch(undoAction()); 
     }
   };
 
   const handleRedo = () => {
     if (canRedo) {
-      dispatch(redoAction()); // Dispatch redo action
+      dispatch(redoAction());
     }
   };
 
