@@ -1,0 +1,19 @@
+.nodeCustomizatinPanel {
+    height: 60px;
+    width: 200px;
+    padding: 10px;
+    border: 2px solid #2b2b2b;
+    border-radius: 8px;
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+  
+  .nodeLabel {
+    font-size: 14px;
+    font-weight: bold;
+    word-wrap: break-word;
+  }
